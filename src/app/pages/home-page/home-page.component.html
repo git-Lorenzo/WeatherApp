@@ -52,7 +52,7 @@
 <section class="weather-section">
     @for(daily of dailyMeteo; track daily.id){
         <div class="weather-card">
-            <img src="https://openweathermap.org/img/wn/{{daily.icon}}d.png" alt="" class="weather-icon">
+            <img [src]="daily.icon" alt="" class="weather-icon">
             <div class="weather-card-day">{{ daily.date | date:"EEE dd"}}</div>
             <div class="weather-card-day">{{ daily.minTemp }}° {{daily.maxTemp}}°</div>
         </div>

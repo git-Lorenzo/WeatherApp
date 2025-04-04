@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { meteoIconMap } from '../maps/meteoIconMap'
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,7 @@ export class WeatherService {
   http = inject(HttpClient)
 
   daily: any[] = []
+  meteoMap = meteoIconMap;
 
   constructor() { }
 
@@ -31,7 +33,7 @@ export class WeatherService {
         maxTemp: Math.round(dailyMeteo.temperature_2m_max[i]),
         minTemp: Math.round(dailyMeteo.temperature_2m_min[i]),
         date: dailyMeteo.time[i],
-        icon: dailyMeteo.weather_code[i]
+        icon: `/${this.meteoMap.get(dailyMeteo.weather_code[i])}.png`
       }
       this.daily.push(day)
     }

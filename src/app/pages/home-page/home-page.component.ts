@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { WeatherService } from '../../services/weather.service';
 import { DatePipe } from '@angular/common';
 
+
 @Component({
   selector: 'app-home-page',
   imports: [FormsModule, DatePipe],
@@ -11,6 +12,7 @@ import { DatePipe } from '@angular/common';
 })
 export class HomePageComponent {
   weatherService = inject(WeatherService)
+
 
   city: string = ''
   dailyMeteo: any[] = []
