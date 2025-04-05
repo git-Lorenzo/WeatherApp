@@ -53,7 +53,7 @@
 
 <section class="weather-section">
     @for(daily of dailyMeteo; track daily.id){
-        <div class="weather-card">
+        <div class="weather-card" (click)="getDayDetails(daily.date)">
             <img [src]="daily.icon" alt="" class="weather-icon">
             <div class="weather-card-day">{{ daily.date | date:"EEE dd"}}</div>
             <div class="weather-card-day">{{ daily.minTemp }}° {{ daily.maxTemp }}°</div>
@@ -100,76 +100,5 @@
                 </td>
         }
 
-        <!-- </tr>
-        <tr>
-            <td>
-                <div class="meteo-detail">
-                    <div>Thursday</div>
-                    <div>3 PM</div>
-                </div>
-            </td>
-            <td>
-                <img src="/weather.png" alt="" class="weather-icon">
-            </td>
-            <td>
-                <div class="meteo-detail">
-                    <div>Temp</div>
-                    <div>31°</div>
-                </div>
-            </td>
-            <td>
-                <div class="meteo-detail">
-                    <div>FL Temp</div>
-                    <div>26°</div>
-                </div>
-            </td>
-            <td>
-                <div class="meteo-detail">
-                    <div>Wind</div>
-                    <div>9mph</div>
-                </div>
-            </td>
-            <td>
-                <div class="meteo-detail">
-                    <div>Precip</div>
-                    <div>0.02in</div>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="meteo-detail">
-                    <div>Thursday</div>
-                    <div>3 PM</div>
-                </div>
-            </td>
-            <td>
-                <img src="/weather.png" alt="" class="weather-icon">
-            </td>
-            <td>
-                <div class="meteo-detail">
-                    <div>Temp</div>
-                    <div>31°</div>
-                </div>
-            </td>
-            <td>
-                <div class="meteo-detail">
-                    <div>FL Temp</div>
-                    <div>26°</div>
-                </div>
-            </td>
-            <td>
-                <div class="meteo-detail">
-                    <div>Wind</div>
-                    <div>9mph</div>
-                </div>
-            </td>
-            <td>
-                <div class="meteo-detail">
-                    <div>Precip</div>
-                    <div>0.02in</div>
-                </div>
-            </td>
-        </tr> -->
     </tbody>
 </table>

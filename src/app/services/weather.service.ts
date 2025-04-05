@@ -23,7 +23,7 @@ export class WeatherService {
   }
 
   searchMeteoByCoords(latitude: number, longitude: number): Observable<any> {
-    const apiResponse = this.http.get<any>(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&daily=weather_code,temperature_2m_min,temperature_2m_max,apparent_temperature_max,apparent_temperature_min&hourly=temperature_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m,wind_direction_10m,is_day&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m,wind_direction_10m,is_day&timezone=auto&forecast_hours=24`)
+    const apiResponse = this.http.get<any>(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&daily=weather_code,temperature_2m_min,temperature_2m_max,apparent_temperature_max,apparent_temperature_min&hourly=temperature_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m,wind_direction_10m,is_day&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m,wind_direction_10m,is_day&timezone=auto&past_hours=0&forecast_hours=168`)
 
     return apiResponse
   }
@@ -63,13 +63,14 @@ export class WeatherService {
     return this.current
   }
 
-  fixedHourlyData(hourlyMeteo: any) {
+  fixedHourlyData(hourlyMeteo: any, selectedDate: any) {
+
     this.hourly = []
-    const dayNumber = new Date()
+    const dayNumber = new Date(selectedDate)
 
     for(let i=0; i < hourlyMeteo.time.length; i++){
       const hourDate = new Date(hourlyMeteo.time[i])
-      if(dayNumber.getDay() === hourDate.getDay()){
+      if(dayNumber.toDateString() === hourDate.toDateString()){
         const hour = {
           id: i+1,
           temperature: Math.round(hourlyMeteo.temperature_2m[i]),

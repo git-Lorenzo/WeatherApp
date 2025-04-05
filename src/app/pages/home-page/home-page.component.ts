@@ -15,9 +15,11 @@ export class HomePageComponent {
 
 
   city: string = ''
+  data: any
   dailyMeteo: any[] = []
   currentMeteo: any
   hourlyMeteo: any
+  currentDate: Date = new Date()
 
   searchMeteoByCity(){
     this.weatherService.searchMeteoByCity(this.city).subscribe(response => {
@@ -26,9 +28,14 @@ export class HomePageComponent {
       this.weatherService.searchMeteoByCoords(latitude, longitude).subscribe(response => {
         this.dailyMeteo = this.weatherService.fixedDailyData(response.daily)
         this.currentMeteo = this.weatherService.fixedCurrentData(response.current)
-        console.log(response)
-        this.hourlyMeteo = this.weatherService.fixedHourlyData(response.hourly)
+        this.hourlyMeteo = this.weatherService.fixedHourlyData(response.hourly, this.currentDate)
+        this.data = response
       })
     })
+  }
+
+  getDayDetails(selectedDate: any){
+    const fixedSelectedDate = new Date(selectedDate)
+    this.hourlyMeteo = this.weatherService.fixedHourlyData(this.data.hourly, fixedSelectedDate)
   }
 }
