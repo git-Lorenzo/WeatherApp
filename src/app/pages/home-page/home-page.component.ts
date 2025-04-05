@@ -16,6 +16,8 @@ export class HomePageComponent {
 
   city: string = ''
   dailyMeteo: any[] = []
+  currentMeteo: any
+  hourlyMeteo: any
 
   searchMeteoByCity(){
     this.weatherService.searchMeteoByCity(this.city).subscribe(response => {
@@ -23,6 +25,9 @@ export class HomePageComponent {
       const longitude = response.results[0].longitude
       this.weatherService.searchMeteoByCoords(latitude, longitude).subscribe(response => {
         this.dailyMeteo = this.weatherService.fixedDailyData(response.daily)
+        this.currentMeteo = this.weatherService.fixedCurrentData(response.current)
+        console.log(response)
+        this.hourlyMeteo = this.weatherService.fixedHourlyData(response.hourly)
       })
     })
   }
