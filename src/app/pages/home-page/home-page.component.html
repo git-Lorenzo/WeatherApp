@@ -11,7 +11,7 @@
 @if(currentMeteo){
     <header>
         <div class="meteo-summary">
-            <img [src]="dailyMeteo[0].icon" alt="">
+            <img [src]="currentMeteo.icon" alt="">
             <span>{{ currentMeteo.temperature }}°C</span>
         </div>
     
