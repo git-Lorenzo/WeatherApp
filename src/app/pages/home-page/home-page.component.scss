@@ -1,6 +1,12 @@
+.container{
+    background-color: hsl(200, 100%, 85%);
+    height: 100vh;
+}
+
 header{
     display: flex;
     align-items: center;
+    margin-bottom: 3rem;
 
     .meteo-summary{
         display: flex;
@@ -49,13 +55,24 @@ header{
     gap: .5rem;
     padding: 1rem;
     justify-content: center;
+    margin-bottom: 3rem;
 
     .weather-card{
         display: flex;
         flex-direction: column;
+        text-align: center;
         align-items: center;
         border: 1px solid hsl(200, 100%, 10%);
+        border-radius: 1rem;
         padding: .25rem;
+
+        .weather-icon{
+            margin-bottom: .5rem;
+        }
+
+        &-temps{
+            font-weight: bold;
+        }
     }
 }
 
@@ -99,4 +116,19 @@ table{
         background-color: blue;
         color: white;
     }
+}
+
+.label{
+    font-weight: bold;
+    font-size: .6rem;
+    text-transform: uppercase;
+    margin-bottom: .3rem;
+}
+
+.data{
+    margin-top: .2rem;
+}
+
+.unit_label{
+    font-size: .8rem;
 }

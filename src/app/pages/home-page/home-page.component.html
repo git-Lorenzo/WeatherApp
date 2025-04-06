@@ -1,104 +1,107 @@
-<form class="search" #meteoForm="ngForm" (ngSubmit)="searchMeteoByCity()">
-    <input 
-        type="text" 
-        placeholder="Inserisci località"
-        name="city"
-        [(ngModel)]="city"
-        required>
-    <button type="submit">C</button>
-</form>
 
-@if(currentMeteo){
-    <header>
-        <div class="meteo-summary">
-            <img [src]="currentMeteo.icon" alt="">
-            <span>{{ currentMeteo.temperature }}°C</span>
-        </div>
+<div class="container">
+    <form class="search" #meteoForm="ngForm" (ngSubmit)="searchMeteoByCity()">
+        <input 
+            type="text" 
+            placeholder="Inserisci località"
+            name="city"
+            [(ngModel)]="city"
+            required>
+        <button type="submit"><img src="/search.svg" alt=""></button>
+    </form>
     
-        <div class="meteo-details">
-            <div class="meteo-detail">
-                <div>High</div>
-                <div>{{ dailyMeteo[0].maxTemp }}°C</div>
+    @if(currentMeteo){
+        <header>
+            <div class="meteo-summary">
+                <img [src]="currentMeteo.icon" alt="">
+                <span>{{ currentMeteo.temperature }}°</span>
             </div>
-    
-            <div class="meteo-detail">
-                <div>Fl High</div>
-                <div>{{ dailyMeteo[0].appMaxTemp }}°C</div>
+        
+            <div class="meteo-details">
+                <div class="meteo-detail">
+                    <div class="label">High</div>
+                    <div>{{ dailyMeteo[0].maxTemp }}°</div>
+                </div>
+        
+                <div class="meteo-detail">
+                    <div class="label">Fl High</div>
+                    <div>{{ dailyMeteo[0].appMaxTemp }}°</div>
+                </div>
+        
+                <div class="meteo-detail">
+                    <div class="label">Wind</div>
+                    <div>{{ currentMeteo.windSpeed }}<span class="unit_label"> km/h</span></div>
+                </div>
+        
+                <div class="meteo-detail">
+                    <div class="label">Low</div>
+                    <div>{{ dailyMeteo[0].minTemp }}°</div>
+                </div>
+        
+                <div class="meteo-detail">
+                    <div class="label">Fl Low</div>
+                    <div>{{ dailyMeteo[0].appMinTemp }}°</div>
+                </div>
+        
+                <div class="meteo-detail">
+                    <div class="label">precip</div>
+                    <div>{{ currentMeteo.precipitation }}<span class="unit_label"> mm</span></div>
+                </div>
+        
             </div>
-    
-            <div class="meteo-detail">
-                <div>Wind</div>
-                <div>{{ currentMeteo.windSpeed }} km/h</div>
-            </div>
-    
-            <div class="meteo-detail">
-                <div>Low</div>
-                <div>{{ dailyMeteo[0].minTemp }}°C</div>
-            </div>
-    
-            <div class="meteo-detail">
-                <div>Fl Low</div>
-                <div>{{ dailyMeteo[0].appMinTemp }}°C</div>
-            </div>
-    
-            <div class="meteo-detail">
-                <div>precip</div>
-                <div>{{ currentMeteo.precipitation }} mm</div>
-            </div>
-    
-        </div>
-    </header>
-    
-}
-
-<section class="weather-section">
-    @for(daily of dailyMeteo; track daily.id){
-        <div class="weather-card" (click)="getDayDetails(daily.date)">
-            <img [src]="daily.icon" alt="" class="weather-icon">
-            <div class="weather-card-day">{{ daily.date | date:"EEE dd"}}</div>
-            <div class="weather-card-day">{{ daily.minTemp }}° {{ daily.maxTemp }}°</div>
-        </div>
+        </header>
+        
     }
-</section>
-
-<table>
-    <tbody>
-        @for(hour of hourlyMeteo; track hour.id){
-            <tr>
-                <td>
-                    <div class="meteo-detail">
-                        <div>{{ hour.date | date: "EEEE"}}</div>
-                        <div>{{ hour.date | date: "H:mm"}}</div>
-                    </div>
-                </td>
-                <td>
-                    <img [src]="hour.icon" alt="" class="weather-icon">
-                </td>
-                <td>
-                    <div class="meteo-detail">
-                        <div>Temp</div>
-                        <div>{{ hour.temperature }}°</div>
-                    </div>
-                </td>
-                <td>
-                    <div class="meteo-detail">
-                        <div>FL Temp</div>
-                        <div>{{ hour.appTemperature }}°</div>
-                    </div>
-                </td>
-                <td>
-                    <div class="meteo-detail">
-                        <div>Wind</div>
-                        <div>{{ hour.windSpeed }} km/h</div>
-                    </div>
-                </td>
-                <td>
-                    <div class="meteo-detail">
-                        <div>Precip</div>
-                        <div>{{ hour.precipitation }} mm</div>
-                    </div>
-                </td>
+    
+    <section class="weather-section">
+        @for(daily of dailyMeteo; track daily.id){
+            <div class="weather-card" (click)="getDayDetails(daily.date)">
+                <img [src]="daily.icon" alt="" class="weather-icon">
+                <div class="weather-card-day label">{{ daily.date | date:"EEE dd"}}</div>
+                <div class="weather-card-temps">{{ daily.minTemp }}° {{ daily.maxTemp }}°</div>
+            </div>
         }
-
-    </tbody>
-</table>
+    </section>
+    
+    <table>
+        <tbody>
+            @for(hour of hourlyMeteo; track hour.id){
+                <tr>
+                    <td>
+                        <div class="meteo-detail">
+                            <div class="label">{{ hour.date | date: "EEEE"}}</div>
+                            <div class="data">{{ hour.date | date: "H:mm"}}</div>
+                        </div>
+                    </td>
+                    <td>
+                        <img [src]="hour.icon" alt="" class="weather-icon">
+                    </td>
+                    <td>
+                        <div class="meteo-detail">
+                            <div class="label">Temp</div>
+                            <div>{{ hour.temperature }}°</div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="meteo-detail">
+                            <div class="label">FL Temp</div>
+                            <div>{{ hour.appTemperature }}°</div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="meteo-detail">
+                            <div class="label">Wind</div>
+                            <div>{{ hour.windSpeed }}<span class="unit_label"> km/h</span></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="meteo-detail">
+                            <div class="label">Precip</div>
+                            <div>{{ hour.precipitation }}<span class="unit_label"> mm</span></div>
+                        </div>
+                    </td>
+            }
+    
+        </tbody>
+    </table>
+</div>

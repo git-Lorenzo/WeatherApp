@@ -52,7 +52,7 @@ export class WeatherService {
       appTemperature: Math.round(currentMeteo.apparent_temperature),
       precipitation: currentMeteo.precipitation,
       humidity: currentMeteo.relative_humidity_2m,
-      windSpeed: currentMeteo.wind_speed_10m,
+      windSpeed: Math.round(currentMeteo.wind_speed_10m),
       windDirection: currentMeteo.wind_direction_10m,
       date: currentMeteo.time,
       icon: `/${this.meteoMap.get(currentMeteo.weather_code)}.png`
@@ -76,7 +76,7 @@ export class WeatherService {
           temperature: Math.round(hourlyMeteo.temperature_2m[i]),
           appTemperature: Math.round(hourlyMeteo.apparent_temperature[i]),
           precipitation: hourlyMeteo.precipitation[i],
-          windSpeed: hourlyMeteo.wind_speed_10m[i],
+          windSpeed: Math.round(hourlyMeteo.wind_speed_10m[i]),
           windDirection: hourlyMeteo.wind_direction_10m[i],
           date: hourlyMeteo.time[i],
           isday: hourlyMeteo.is_day[i],
