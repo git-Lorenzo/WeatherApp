@@ -3,23 +3,41 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { meteoIconMap } from '../maps/meteoIconMap'
 import { meteoIconNightMap } from '../maps/meteoIconMap'
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WeatherService {
   http = inject(HttpClient)
+  router = inject(Router)
 
+  data: any
   daily: any[] = []
   current: any
   hourly: any
+  currentDate: Date = new Date()
   meteoMap = meteoIconMap;
   meteoNightMap = meteoIconNightMap;
 
   constructor() { }
 
-  searchMeteoByCity(city: string): Observable<any> {
-    return this.http.get<any>(`https://geocoding-api.open-meteo.com/v1/search?name=${city}&count=1&language=it`)
+  navigateToMeteo(city: string){
+    this.router.navigate(['meteo', city])
+  }
+
+  searchMeteoByCity(city: string): void {
+    this.http.get<any>(`https://geocoding-api.open-meteo.com/v1/search?name=${city}&count=1&language=it`).subscribe(response => {
+      const latitude = response.results[0].latitude
+      const longitude = response.results[0].longitude
+      this.searchMeteoByCoords(latitude, longitude).subscribe(response => {
+        console.log(response)
+        this.daily = this.fixedDailyData(response.daily)
+        this.current = this.fixedCurrentData(response.current)
+        this.hourly = this.fixedHourlyData(response.hourly, this.currentDate)
+        this.data = response
+      })
+    })
   }
 
   searchMeteoByCoords(latitude: number, longitude: number): Observable<any> {
