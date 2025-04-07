@@ -56,6 +56,21 @@ header{
     justify-content: center;
     margin-bottom: 3rem;
 
+
+    input[type=radio]{
+        display: none;
+
+        &:first-of-type + label .weather-card{
+        
+        }
+    
+
+    
+        &:checked + label .weather-card{
+            background-color: blue;
+        }
+    }
+
     .weather-card{
         display: flex;
         flex-direction: column;
@@ -131,3 +146,4 @@ table{
 .unit_label{
     font-size: .8rem;
 }
+

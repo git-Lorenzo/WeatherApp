@@ -19,31 +19,18 @@ export class WeatherService {
   currentDate: Date = new Date()
   meteoMap = meteoIconMap;
   meteoNightMap = meteoIconNightMap;
+  latitude: any
+  longitude: any
+  city: string = ''
 
   constructor() { }
 
-  navigateToMeteo(city: string){
-    this.router.navigate(['meteo', city])
-  }
-
-  searchMeteoByCity(city: string): void {
-    this.http.get<any>(`https://geocoding-api.open-meteo.com/v1/search?name=${city}&count=1&language=it`).subscribe(response => {
-      const latitude = response.results[0].latitude
-      const longitude = response.results[0].longitude
-      this.searchMeteoByCoords(latitude, longitude).subscribe(response => {
-        console.log(response)
-        this.daily = this.fixedDailyData(response.daily)
-        this.current = this.fixedCurrentData(response.current)
-        this.hourly = this.fixedHourlyData(response.hourly, this.currentDate)
-        this.data = response
-      })
-    })
+  searchMeteoByCity(city: string): Observable<any> {
+    return this.http.get<any>(`https://geocoding-api.open-meteo.com/v1/search?name=${city}&count=1&language=it`)
   }
 
   searchMeteoByCoords(latitude: number, longitude: number): Observable<any> {
-    const apiResponse = this.http.get<any>(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&daily=weather_code,temperature_2m_min,temperature_2m_max,apparent_temperature_max,apparent_temperature_min&hourly=temperature_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m,wind_direction_10m,is_day&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m,wind_direction_10m,is_day&timezone=auto&past_hours=0&forecast_hours=168`)
-
-    return apiResponse
+    return this.http.get<any>(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&daily=weather_code,temperature_2m_min,temperature_2m_max,apparent_temperature_max,apparent_temperature_min&hourly=temperature_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m,wind_direction_10m,is_day&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m,wind_direction_10m,is_day&timezone=auto&past_hours=0&forecast_hours=168`)
   }
 
 
