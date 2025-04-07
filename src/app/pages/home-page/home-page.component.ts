@@ -17,7 +17,7 @@ export class HomePageComponent {
 
   city: string = ''
 
-  searchMeteoByCity(){
+  navigateToCity(){
     this.router.navigate(['meteo', this.city])
   }
 

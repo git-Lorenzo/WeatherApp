@@ -1,8 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { meteoIconMap } from '../maps/meteoIconMap'
-import { meteoIconNightMap } from '../maps/meteoIconMap'
+import { meteoIconMap } from '../maps/meteoMap'
+import { meteoIconNightMap } from '../maps/meteoMap'
+import { meteoBackgroundMap } from '../maps/meteoMap'
+import { meteoNightBackgroundMap } from '../maps/meteoMap'
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -19,6 +21,8 @@ export class WeatherService {
   currentDate: Date = new Date()
   meteoMap = meteoIconMap;
   meteoNightMap = meteoIconNightMap;
+  meteoBackgroundMap = meteoBackgroundMap;
+  meteoNightBackgroundMap = meteoNightBackgroundMap;
   latitude: any
   longitude: any
   city: string = ''
@@ -60,7 +64,8 @@ export class WeatherService {
       windSpeed: Math.round(currentMeteo.wind_speed_10m),
       windDirection: currentMeteo.wind_direction_10m,
       date: currentMeteo.time,
-      icon: `/${this.meteoMap.get(currentMeteo.weather_code)}.png`
+      icon: `/${this.meteoMap.get(currentMeteo.weather_code)}.png`,
+      background: `url(${this.meteoBackgroundMap.get(currentMeteo.weather_code)}.png) center center / cover no-repeat fixed`,
     }
     if(currentMeteo.isday){
       this.current.icon = `/${this.meteoNightMap.get(currentMeteo.weather_code)}.png`
