@@ -20,6 +20,11 @@
     padding: 1.5rem;
   }
 
+  @media screen and (min-width: 900px) {
+    .container{
+      max-width: 600px;
+    }
+  }
   
 
 

@@ -53,3 +53,9 @@
     }
   }
 
+  @media screen and (min-width: 900px) {
+    .daily-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+

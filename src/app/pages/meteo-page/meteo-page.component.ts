@@ -40,8 +40,6 @@ export class MeteoPageComponent implements OnInit{
     city? this.navigateToCity(city) : this.navigateToCity(this.city)
   }
 
-
-
   navigateToCity(city: string){
     {
       this.weatherService.searchMeteoByCity(city).subscribe({
