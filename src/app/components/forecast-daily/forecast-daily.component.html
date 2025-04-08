@@ -1,0 +1,15 @@
+<div class="forecast-daily">
+    <h2>Prossimi giorni</h2>
+    <div class="daily-grid">
+        @for(daily of daily; track daily.id){
+            <input type="radio" name="prova" [id]="daily.id" [checked]="daily.id === 1 ? 'checked' : '' ">
+            <label [for]="daily.id">
+            <div class="day" (click)="getDayDetails(daily.date)">
+                <div>{{ daily.date | date:"EEE dd"}}</div>
+                <img [src]="daily.icon" alt="" class="weather-icon">
+                <div>{{ daily.minTemp }}° {{ daily.maxTemp }}°</div>
+              </div>
+            </label>
+        }
+    </div>
+  </div>

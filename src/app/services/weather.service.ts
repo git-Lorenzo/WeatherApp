@@ -14,18 +14,21 @@ export class WeatherService {
   http = inject(HttpClient)
   router = inject(Router)
 
+  latitude: any
+  longitude: any
+  city: string = ''
+
   data: any
   daily: any[] = []
   current: any
   hourly: any
+
   currentDate: Date = new Date()
+
   meteoMap = meteoIconMap;
   meteoNightMap = meteoIconNightMap;
   meteoBackgroundMap = meteoBackgroundMap;
   meteoNightBackgroundMap = meteoNightBackgroundMap;
-  latitude: any
-  longitude: any
-  city: string = ''
 
   constructor() { }
 
@@ -34,7 +37,7 @@ export class WeatherService {
   }
 
   searchMeteoByCoords(latitude: number, longitude: number): Observable<any> {
-    return this.http.get<any>(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&daily=weather_code,temperature_2m_min,temperature_2m_max,apparent_temperature_max,apparent_temperature_min&hourly=temperature_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m,wind_direction_10m,is_day&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m,wind_direction_10m,is_day&timezone=auto&past_hours=0&forecast_hours=168`)
+    return this.http.get<any>(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&daily=weather_code,temperature_2m_min,temperature_2m_max&hourly=temperature_2m,precipitation,weather_code,is_day&current=temperature_2m,precipitation,weather_code,is_day&timezone=auto&past_hours=0&forecast_hours=168`)
   }
 
 
@@ -45,8 +48,6 @@ export class WeatherService {
         id: i+1,
         maxTemp: Math.round(dailyMeteo.temperature_2m_max[i]),
         minTemp: Math.round(dailyMeteo.temperature_2m_min[i]),
-        appMaxTemp: Math.round(dailyMeteo.apparent_temperature_max[i]),
-        appMinTemp: Math.round(dailyMeteo.apparent_temperature_min[i]),
         date: dailyMeteo.time[i],
         icon: `/${this.meteoMap.get(dailyMeteo.weather_code[i])}.png`
       }
@@ -58,17 +59,14 @@ export class WeatherService {
   fixedCurrentData(currentMeteo: any) {
     this.current = {
       temperature: Math.round(currentMeteo.temperature_2m),
-      appTemperature: Math.round(currentMeteo.apparent_temperature),
       precipitation: currentMeteo.precipitation,
-      humidity: currentMeteo.relative_humidity_2m,
-      windSpeed: Math.round(currentMeteo.wind_speed_10m),
-      windDirection: currentMeteo.wind_direction_10m,
       date: currentMeteo.time,
       icon: `/${this.meteoMap.get(currentMeteo.weather_code)}.png`,
       background: `url(${this.meteoBackgroundMap.get(currentMeteo.weather_code)}.png) center center / cover no-repeat fixed`,
     }
-    if(currentMeteo.isday){
+    if(!currentMeteo.is_day){
       this.current.icon = `/${this.meteoNightMap.get(currentMeteo.weather_code)}.png`
+      this.current.background = `url(${this.meteoNightBackgroundMap.get(currentMeteo.weather_code)}.png) center center / cover no-repeat fixed`
     }
     return this.current
   }
@@ -84,10 +82,7 @@ export class WeatherService {
         const hour = {
           id: i+1,
           temperature: Math.round(hourlyMeteo.temperature_2m[i]),
-          appTemperature: Math.round(hourlyMeteo.apparent_temperature[i]),
           precipitation: hourlyMeteo.precipitation[i],
-          windSpeed: Math.round(hourlyMeteo.wind_speed_10m[i]),
-          windDirection: hourlyMeteo.wind_direction_10m[i],
           date: hourlyMeteo.time[i],
           isday: hourlyMeteo.is_day[i],
           icon: ``

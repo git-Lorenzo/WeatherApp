@@ -1,159 +1,21 @@
- <!-- @if(weatherService.current){
-    <header>
-        <div class="meteo-summary">
-            <img [src]="current.icon" alt="">
-            <span>{{ current.temperature }}°</span>
+@if(data){
+    <body [style.background]="current.background">
+        <div class="container">
+            <app-search-bar 
+            (onSearchCity)="navigateToCity($event)"/>
+      
+            <app-meteo-header 
+            [city]="city"
+            [current]="current"/>
+
+            <app-forecast-hourly 
+            [date]="selectedDate"
+            [hourly]="hourly"/>
+    
+            <app-forecast-daily 
+            [daily]="daily"
+            (onEmitDate)="getDayDetails($event)"/>
         </div>
+      </body>
     
-        <div class="meteo-details">
-            <div class="meteo-detail">
-                <div class="label">High</div>
-                <div>{{ daily[0].maxTemp }}°</div>
-            </div>
-    
-            <div class="meteo-detail">
-                <div class="label">Fl High</div>
-                <div>{{ daily[0].appMaxTemp }}°</div>
-            </div>
-    
-            <div class="meteo-detail">
-                <div class="label">Wind</div>
-                <div>{{ current.windSpeed }}<span class="unit_label"> km/h</span></div>
-            </div>
-    
-            <div class="meteo-detail">
-                <div class="label">Low</div>
-                <div>{{ daily[0].minTemp }}°</div>
-            </div>
-    
-            <div class="meteo-detail">
-                <div class="label">Fl Low</div>
-                <div>{{ daily[0].appMinTemp }}°</div>
-            </div>
-    
-            <div class="meteo-detail">
-                <div class="label">precip</div>
-                <div>{{ current.precipitation }}<span class="unit_label"> mm</span></div>
-            </div>
-    
-        </div>
-    </header>
-    
-} 
-
- <section class="weather-section">
-    @for(daily of daily; track daily.id){
-        <input type="radio" name="prova" [id]="daily.id" [checked]="daily.id === 1 ? 'checked' : '' ">
-        <label [for]="daily.id">
-            <div class="weather-card" (click)="getDayDetails(daily.date)">
-                <img [src]="daily.icon" alt="" class="weather-icon">
-                <div class="weather-card-day label">{{ daily.date | date:"EEE dd"}}</div>
-                <div class="weather-card-temps">{{ daily.minTemp }}° {{ daily.maxTemp }}°</div>
-            </div>
-        </label>
-
-    }
-</section> 
-
- <table>
-    <tbody>
-        @for(hour of hourly; track hour.id){
-            <tr>
-                <td>
-                    <div class="meteo-detail">
-                        <div class="label">{{ hour.date | date: "EEEE"}}</div>
-                        <div class="data">{{ hour.date | date: "H:mm"}}</div>
-                    </div>
-                </td>
-                <td>
-                    <img [src]="hour.icon" alt="" class="weather-icon">
-                </td>
-                <td>
-                    <div class="meteo-detail">
-                        <div class="label">Temp</div>
-                        <div>{{ hour.temperature }}°</div>
-                    </div>
-                </td>
-                <td>
-                    <div class="meteo-detail">
-                        <div class="label">FL Temp</div>
-                        <div>{{ hour.appTemperature }}°</div>
-                    </div>
-                </td>
-                <td>
-                    <div class="meteo-detail">
-                        <div class="label">Wind</div>
-                        <div>{{ hour.windSpeed }}<span class="unit_label"> km/h</span></div>
-                    </div>
-                </td>
-                <td>
-                    <div class="meteo-detail">
-                        <div class="label">Precip</div>
-                        <div>{{ hour.precipitation }}<span class="unit_label"> mm</span></div>
-                    </div>
-                </td>
-        }
-
-    </tbody>
-</table> 
- <div class="container">
-    <form class="search" #meteoForm="ngForm" (ngSubmit)="navigateToCity()">
-        <input 
-            type="text" 
-            placeholder="Inserisci località"
-            name="city"
-            [(ngModel)]="city"
-            required>
-        <button type="submit"><img src="/search.svg" alt=""></button>
-    </form>
-</div>  -->
-
-<body [style.background]="current.background">
-    <div class="container">
-        <form class="search" #meteoForm="ngForm" (ngSubmit)="navigateToCity()">
-        <input 
-            type="text" 
-            placeholder="Cerca città..."
-            name="city"
-            [(ngModel)]="city"
-            required>
-        <button type="submit">🔍</button>
-        </form>
-  
-      <div class="location">
-        <h1>{{city}}</h1>
-        <p>{{todayDate | date: "EEEE, MMMM d"}}</p>
-      </div>
-      @if(current){
-        <div class="temperature">{{ current.temperature }}°</div>
-        <!-- <div class="description">Sereno</div> -->
-      }
-
-  
-      <div class="forecast-hourly">
-        <h2>Ora</h2>
-        <div class="hourly-scroll">
-            @for(hour of hourly; track hour.id){
-                <div class="hour">
-                    <div>{{ hour.date | date: "H:mm"}}</div>
-                    <img [src]="hour.icon" alt="" class="weather-icon">
-                    <div>{{ hour.temperature }}°</div>
-                  </div>
-            }
-        </div>
-      </div>
-  
-      <div class="forecast-daily">
-        <h2>Prossimi giorni</h2>
-        <div class="daily-grid">
-            @for(daily of daily; track daily.id){
-                <div class="day">
-                    <div>{{ daily.date | date:"EEE dd"}}</div>
-                    <img [src]="daily.icon" alt="" class="weather-icon">
-                    <div>{{ daily.minTemp }}° {{ daily.maxTemp }}°</div>
-                  </div>
-            }
-        </div>
-      </div>
-    </div>
-  </body>
+}

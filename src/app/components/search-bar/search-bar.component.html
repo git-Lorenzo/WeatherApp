@@ -1,0 +1,9 @@
+<form class="search" #meteoForm="ngForm" (ngSubmit)="navigateToCity()">
+    <input 
+        type="text" 
+        placeholder="Cerca città..."
+        name="city"
+        [(ngModel)]="city"
+        required>
+    <button type="submit">🔍</button>
+    </form>

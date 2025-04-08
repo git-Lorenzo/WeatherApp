@@ -1,0 +1,25 @@
+<div class="forecast-hourly">
+    <h2>{{ date | date: 'MMM d' }}</h2>
+  
+    <div class="scroll-wrapper">
+      
+      @if (!atStart) {
+        <button class="scroll-button left" (click)="scrollLeft()">&lt;</button>
+      }
+  
+      <div class="hourly-scroll" #scrollContainer (scroll)="onScroll()">
+        @for (hour of hourly; track hour.id) {
+          <div class="hour">
+            <div>{{ hour.date | date: 'H:mm' }}</div>
+            <img [src]="hour.icon" alt="" class="weather-icon" />
+            <div>{{ hour.temperature }}°</div>
+          </div>
+        }
+      </div>
+  
+      @if (!atEnd) {
+        <button class="scroll-button right" (click)="scrollRight()">&gt;</button>
+      }
+  
+    </div>
+  </div>

@@ -1,0 +1,7 @@
+<div class="location">
+    <h1>{{city}}</h1>
+    <p>{{todayDate | date: "EEEE, MMMM d"}}</p>
+  </div>
+  @if(current){
+    <div class="temperature">{{ current.temperature }}°</div>
+  }
