@@ -49,7 +49,7 @@ export class WeatherService {
         maxTemp: Math.round(dailyMeteo.temperature_2m_max[i]),
         minTemp: Math.round(dailyMeteo.temperature_2m_min[i]),
         date: dailyMeteo.time[i],
-        icon: `/${this.meteoMap.get(dailyMeteo.weather_code[i])}.png`
+        icon: `assets/icons/${this.meteoMap.get(dailyMeteo.weather_code[i])}.png`
       }
       this.daily.push(day)
     }
@@ -62,11 +62,11 @@ export class WeatherService {
       precipitation: currentMeteo.precipitation,
       date: currentMeteo.time,
       icon: `/${this.meteoMap.get(currentMeteo.weather_code)}.png`,
-      background: `url(${this.meteoBackgroundMap.get(currentMeteo.weather_code)}.png) center center / cover no-repeat fixed`,
+      background: `url(assets/images/${this.meteoBackgroundMap.get(currentMeteo.weather_code)}.png) center center / cover no-repeat fixed`,
     }
     if(!currentMeteo.is_day){
-      this.current.icon = `/${this.meteoNightMap.get(currentMeteo.weather_code)}.png`
-      this.current.background = `url(${this.meteoNightBackgroundMap.get(currentMeteo.weather_code)}.png) center center / cover no-repeat fixed`
+      this.current.icon = `assets/icons/${this.meteoNightMap.get(currentMeteo.weather_code)}.png`
+      this.current.background = `url(assets/images/${this.meteoNightBackgroundMap.get(currentMeteo.weather_code)}.png) center center / cover no-repeat fixed`
     }
     return this.current
   }
@@ -88,8 +88,8 @@ export class WeatherService {
           icon: ``
         }
         hourlyMeteo.is_day[i] ? 
-          hour.icon = `/${ this.meteoMap.get(hourlyMeteo.weather_code[i]) }.png` : 
-          hour.icon = `/${ this.meteoNightMap.get(hourlyMeteo.weather_code[i])}.png`
+          hour.icon = `assets/icons/${ this.meteoMap.get(hourlyMeteo.weather_code[i]) }.png` : 
+          hour.icon = `assets/icons/${ this.meteoNightMap.get(hourlyMeteo.weather_code[i])}.png`
   
         this.hourly.push(hour)
       }
